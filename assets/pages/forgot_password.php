@@ -1,52 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap/icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="main.css" rel="stylesheet">
-    <title>Login</title>
-</head>
-
-<body>
     <div class="login">
-        <div class="col-4 bg-white border rounded p-4 shadow-sm">
-            <form>
+        <div class="col-lg-4 col-md-8 col-sm-12 bg-white border rounded p-4 shadow-sm">
+            <?php
+if(isset($_SESSION['forgot_code']) && !isset($_SESSION['auth_temp'])){
+    $action = 'verifycode';
+}elseif(isset($_SESSION['forgot_code']) && isset($_SESSION['auth_temp'])){
+    $action = 'changepassword';
+}else{
+    $action= 'forgotpassword';
+}
+            ?>
+            <form method="post" action="assets/php/actions.php?<?=$action?>">
                 <div class="d-flex justify-content-center">
 
 
                 </div>
                 <h1 class="h5 mb-3 fw-normal">Forgot Your Password ?</h1>
-
-                <div class="form-floating">
-                    <input type="email" class="form-control rounded-0" placeholder="username/email">
-                    <label for="floatingInput">username/email</label>
+<?php
+if($action=='forgotpassword'){
+    ?>
+  <div class="form-floating">
+                    <input type="email" name="email" class="form-control rounded-0" placeholder="username/email">
+                    <label for="floatingInput">enter your email</label>
                 </div>
+                <?=showError('email')?>
 
-                <div class="form-floating mt-1">
-                    <input type="password" class="form-control rounded-0" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">new password</label>
-                </div>
-                <p>Enter 6 Digit Code Sended to You</p>
+<br>
+                <button class="btn btn-primary" type="submit">Send Verification Code</button>
+
+    <?php
+}
+?>
+   
+   
+   <?php
+if($action=='verifycode'){
+    ?>
+<p>Enter 6 Digit Code Sended to You  - <?=$_SESSION['forgot_email']?></p>
                 <div class="form-floating mt-1">
 
-                    <input type="password" class="form-control rounded-0" id="floatingPassword" placeholder="Password">
+                    <input type="text" name="code" class="form-control rounded-0" id="floatingPassword" placeholder="Password">
                     <label for="floatingPassword">######</label>
                 </div>
-                <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <button class="btn btn-primary" type="submit">Send Verification Code</button>
-                    <button class="btn btn-primary" type="submit">Change Password</button>
-                    <button class="btn btn-primary" type="submit">Verify Code</button>
+                <?=showError('email_verify')?>
 
-
-
-
-
-                </div>
                 <br>
+                <button class="btn btn-primary" type="submit">Verify Code</button>
+
+    <?php
+}
+?>
+
+
+<?php
+if($action=='changepassword'){
+    ?>
+<p>Enter your new password  - <?=$_SESSION['forgot_email']?></p>
+<div class="form-floating mt-1">
+                    <input type="password" name="password" class="form-control rounded-0" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">new password</label>
+                </div> 
+                <?=showError('password')?>
+
+                <br>
+                <button class="btn btn-primary" type="submit">Change Password</button>
+
+
+    <?php
+}
+?>
+
+                 
+            
+                <br>
+                <br>
+
                 <a href="?login" class="text-decoration-none mt-5"><i class="bi bi-arrow-left-circle-fill"></i> Go Back
                     To
                     Login</a>
@@ -54,8 +82,3 @@
         </div>
     </div>
 
-
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
