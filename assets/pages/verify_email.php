@@ -1,14 +1,15 @@
 <?php
 global $user;
+
 ?>
     <div class="login">
-        <div class="col-md-4 col-sm-11 bg-white border rounded p-4 shadow-sm">
+        <div class="col-4 bg-white border rounded p-4 shadow-sm">
             <form method="post" action="assets/php/actions.php?verify_email">
                 <div class="d-flex justify-content-center">
 
 
                 </div>
-                <h1 class="h5 mb-3 fw-normal">Verify Your Email Id (<?=$user['email']?>)</h1>
+                <h1 class="h5 mb-3 fw-normal">Verifikasi Email Kamu (<?=$user['email'] ?>)</h1>
 
 
                 <p>Enter 6 Digit Code Sended to You</p>
@@ -17,19 +18,21 @@ global $user;
                     <input type="text" name="code" class="form-control rounded-0" id="floatingPassword" placeholder="Password">
                     <label for="floatingPassword">######</label>
                 </div>
-                <?php
-if(isset($_GET['resended'])){
-    ?>
-<p class="text-success">Verification code resended !</p>
 
-<?php
-}
+    
+                <?php
+                if(isset($_GET['resended']))
+                    {
+                     ?>
+                     <p class="text-success">Kode Verifikasi Telah Dikirim Ulang! </p>
+                     <?php
+                    }
                 ?>
-                <?=showError('email_verify')?>
+                <?=showError('email_verify');?>
 
                 <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <button class="btn btn-primary" type="submit">Verify Email</button>
-                    <a href="assets/php/actions.php?resend_code" class="text-decoration-none" type="submit">Resend Code</a>
+                    <button class="btn btn-primary" type="submit">Verifikasi Email</button>
+                    <a href="assets/php/actions.php?resend_code" class="text-decoration-none" type="submit">Kirim Ulang Kode</button>
 
 
 
@@ -42,6 +45,3 @@ if(isset($_GET['resended'])){
             </form>
         </div>
     </div>
-
-
-   
