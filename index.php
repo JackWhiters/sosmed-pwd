@@ -14,11 +14,20 @@ require_once 'assets/php/functions.php';
 //     showPage('header',['page_title'=>'Social media - Login']);
 //     showPage('login');    
 // }
+// echo "<pre>";
+// print_r(getPost());
 
-
+//untuk mengunset lupa password
+if(isset($_GET['newfp']))
+{
+    unset($_SESSION['auth_temp']);
+    unset($_SESSION['lupa_email']);
+    unset($_SESSION['lupa_code']);
+}
 //Level User ditaro setelah menggunakan PHPMailer
 if(isset($_SESSION['Auth'])) {
     $user = getUser($_SESSION['userdata']['id']);
+    $posts = getPost();
 }
 
 $pagecount = count($_GET);

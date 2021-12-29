@@ -332,11 +332,78 @@ function validateLoginForm($form_data)
             $image_dir="../images/profile/$image_name";
             move_uploaded_file($imagedata['tmp_name'],$image_dir);
             $profile_pic=", profile_pic='$image_name'";
-
-
         }
 
         $query = "UPDATE users SET first_name = '$first_name', last_name='$last_name', username='$username',password='$password' $profile_pic WHERE id=".$_SESSION['userdata']['id'];
         return mysqli_query($db,$query);    
     }
+
+    //Validasi post
+    function validatePostImage($image_data)
+
+    {
+        $response=array();
+        $response['status']=true;
+    
+        if(!$image_data['name'])
+        {
+            $response['msg']="Tidak ada foto yang dipilih";
+            $response['status']=false;
+            $response['field']='post_img';
+    
+        }   
+    
+        if($image_data['name'])
+        {
+            $image = basename($image_data['name']);
+            $type = strtolower(pathinfo($image,PATHINFO_EXTENSION));
+            $size = $image_data['size']/2000;
+            if($type!=='jpg'&& $type!='jpeg' && $type!='png')
+            {
+                $response['msg']="Format Gambar yang di izinkan hanya Jpg,Jpeg,png";
+                $response['status']=false;
+                $response['field']='post_img';
+        
+            }
+    
+            if($size>2000)
+            {
+                $response['msg']="Upload gambar maksimal 2 mb";
+                $response['status']=false;
+                $response['field']='post_img';
+            }
+        }
+    
+    
+        return $response;
+    }
+
+    //untuk membuat post
+    function createPost($text,$image)
+    {
+        global $db;
+        $post_text = mysqli_real_escape_string($db,$text['post_text']);
+        $user_id = $_SESSION['userdata']['id'];
+
+            $image_name = time().basename($image['name']);
+            $image_dir="../images/posts/$image_name";
+            move_uploaded_file($image['tmp_name'],$image_dir);
+
+
+        $query = "INSERT INTO posts(user_id,post_img,post_text)";
+        $query .="VALUES ($user_id,'$image_name','$post_text')";
+        return mysqli_query($db,$query);
+    }
+
+    //untuk menampilkan posts
+    function getPost()
+    {
+        global $db;
+    
+        $query =   "SELECT posts.id,posts.post_img,posts.post_text,posts.created_at,users.first_name,users.last_name,users.username,users.profile_pic
+                    FROM posts JOIN users ON users.id=posts.user_id ORDER BY id DESC";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_ALL($run,TRUE);
+    }
+    
 ?>

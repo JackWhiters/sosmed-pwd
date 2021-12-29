@@ -32,7 +32,7 @@
                         <label for="floatingInput">first name</label>
                     </div>
                     <div class="form-floating mt-1 col-6">
-                        <input type="text" name="last_name" value="<?=$user['last_name'] ?>" class="form-control rounded-0" placeholder="username/email">
+                        <input type="text" name="last_name" value="<?=$user['last_name'] ?>" class="form-control rounded-0" placeholder="last name>
                         <label for="floatingInput">last name</label>
                     </div>
                 </div>

@@ -180,6 +180,7 @@ if(isset($_GET['ubahpassword']))
     }
 }
 
+//untuk update profile
 if(isset($_GET['updateprofile']))
 {
     // echo "<pre>";
@@ -205,6 +206,26 @@ if(isset($_GET['updateprofile']))
         $_SESSION['error']=$response;
         $_SESSION['formdata']=$_POST;
         header("location:../../?editprofile");
+    }
+}
+
+//untuk manajement postingan
+if(isset($_GET['addpost']))
+{
+    $response = validatePostImage($_FILES['post_img']);
+
+    if($response['status'])
+    {
+        if(createPost($_POST,$_FILES['post_img']))
+            {
+                header("location:../../?new_post_added");
+            } else {
+                echo "ada yang salah";
+            }
+    }
+    else {
+        $_SESSION['error']=$response;
+        header("location:../../");
     }
 }
 ?>
