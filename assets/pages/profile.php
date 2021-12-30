@@ -44,7 +44,19 @@
                         
                     ?>
                         <div class="d-flex gap-2 align-items-center my-1">
-                        <button class="btn btn-sm btn-danger unfollowbtn" data-user-id=<?=$profile['id']?>>Unfollow</button>
+                        <?php
+                            if(checkFollowStatus($profile['id'])){
+                                ?>
+                                <button class="btn btn-sm btn-danger unfollowbtn" data-user-id=<?=$profile['id']?>>Unfollow</button>
+                                <?php
+                            } else {
+                              ?>
+                                <button class="btn btn-sm btn-primary followbtn" data-user-id=<?=$profile['id']?>>follow</button>
+                              <?php
+
+                            }
+                        ?>
+                        
 
 
 
