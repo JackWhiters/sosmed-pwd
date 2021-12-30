@@ -400,7 +400,7 @@ function validateLoginForm($form_data)
     {
         global $db;
     
-        $query =   "SELECT posts.id,posts.post_img,posts.post_text,posts.created_at,users.first_name,users.last_name,users.username,users.profile_pic
+        $query =   "SELECT posts.id, posts.user_id, posts.post_img, posts.post_text, posts.created_at, users.first_name, users.last_name, users.username, users.profile_pic
                     FROM posts JOIN users ON users.id=posts.user_id ORDER BY id DESC";
         $run = mysqli_query($db,$query);
         return mysqli_fetch_ALL($run,TRUE);
@@ -444,7 +444,7 @@ function validateLoginForm($form_data)
         $list = getFollowSuggestions();
         $filter_list = array();
         foreach($list as $user) {
-            if(!checkFollowStatus($user['id'])){
+            if(!checkFollowStatus($user['id']) && count($filter_list)<5){
                 $filter_list[]=$user;
             }
         }
@@ -471,4 +471,49 @@ function validateLoginForm($form_data)
         $query="INSERT INTO follow_list(follower_id,user_id) VALUES($current_user,$user_id)";
         return mysqli_query($db,$query);
     }
+
+    //untuk filter Posts Dynamic untuk di wall
+    function filterPosts()
+    {
+        $list = getPost();
+        $filter_list = array();
+        foreach($list as $post) {
+            if(checkFollowStatus($post['user_id']) || $post['user_id']==$_SESSION['userdata']['id']){
+                $filter_list[]=$post;
+            }
+        }
+
+        return $filter_list;
+
+    }
+
+    //menampilkan jumlah followers
+    function getFollowers($user_id)
+    {
+        global $db;
+        $query = "SELECT * FROM follow_list WHERE user_id=$user_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_ALL($run,TRUE);
+
+
+    }
+
+    //menampilkan jumlah following
+    function getFollowing($user_id)
+    {
+        global $db;
+        $query = "SELECT * FROM follow_list WHERE follower_id=$user_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_ALL($run,TRUE);
+    }
+
+    //function untuk unfollow user
+    function unfollowUser($user_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="DELETE FROM follow_list WHERE follower_id=$current_user && user_id=$user_id";
+        return mysqli_query($db,$query);
+    }    
+
 ?>

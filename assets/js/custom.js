@@ -23,8 +23,8 @@ function preview()
 //untuk follow user
 
 $(".followbtn").click(function(){
-    let user_id_v = $(this).data('userId');
-    let button = this;
+    var user_id_v = $(this).data('userId');
+    var button = this;
     $(button).attr('disabled', true);
 
     $.ajax({
@@ -37,6 +37,34 @@ $(".followbtn").click(function(){
                 // $(button).attr('disabled', true);
                 $(button).data('userId', 0);
                 $(button).html('<i class="bi bi-check-circle-fill"></i> Followed');
+            }
+            else
+            {
+                $(button).attr('disabled', false);
+                alert("Ada yang salah, Coba beberapa saat lagi");
+            }
+        }
+
+    });
+});
+
+//untuk unfollow user
+
+$(".unfollowbtn").click(function(){
+    var user_id_v = $(this).data('userId');
+    var button = this;
+    $(button).attr('disabled', true);
+
+    $.ajax({
+        url:'assets/php/ajax.php?unfollow',
+        method:'post',
+        dataType:'json',
+        data:{user_id: user_id_v },
+        success: function (response) {
+            if(response.status) {
+                // $(button).attr('disabled', true);
+                $(button).data('userId', 0);
+                $(button).html('<i class="bi bi-check-circle-fill"></i> Unfollowed');
             }
             else
             {

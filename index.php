@@ -27,7 +27,7 @@ if(isset($_GET['newfp']))
 //Level User ditaro setelah menggunakan PHPMailer
 if(isset($_SESSION['Auth'])) {
     $user = getUser($_SESSION['userdata']['id']);
-    $posts = getPost();
+    $posts = filterPosts();
     //untuk saran follow
     $saran_follow = filterFollowSuggestion();
 }
@@ -73,6 +73,8 @@ elseif(isset($_SESSION['Auth']) && isset($_GET['u']) && $user['ac_status']==1)
     }
     else {
         $profile_post = getPostById($profile['id']);
+        $profile['followers'] = getFollowers($profile['id']);
+        $profile['following'] = getFollowing($profile['id']);
         // print_r($profile_post);
         showPage('header',['page_title'=>$profile['first_name'].' '.$profile['last_name']]);
         showPage('navbar');
@@ -111,8 +113,8 @@ else
     }
     elseif(isset($_SESSION['Auth']) && $user['ac_status']==2 )
     {
-    showPage('header',['page_title'=>'Social media - Blokir']);
-    showPage('blocked');
+        showPage('header',['page_title'=>'Social media - Blokir']);
+        showPage('blocked');
     }
     else
     {

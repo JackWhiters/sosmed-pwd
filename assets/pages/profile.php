@@ -1,6 +1,7 @@
 <?php
     global $profile;
     global $profile_post;
+    global $user;
 ?>
     <div class="container col-9 rounded-0">
         <div class="col-12 rounded p-4 mt-4 d-flex gap-5">
@@ -11,39 +12,59 @@
                 <div class="d-flex flex-column">
                     <div class="d-flex gap-5 align-items-center">
                         <span style="font-size: xx-large;"><?=$profile['first_name']?> <?=$profile['last_name']?></span>
-                        <div class="dropdown">
-                            <span class="" style="font-size:xx-large" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i> </span>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-chat-fill"></i> Message</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-x-circle-fill"></i> Block</a></li>
-                            </ul>
+                        <?php
+                            if($user['id']!=$profile['id']){
+                        ?>
+                            <div class="dropdown">
+                                <span class="" style="font-size:xx-large" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i> </span>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-chat-fill"></i> Message</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-x-circle-fill"></i> Block</a></li>
+                                </ul>
                         </div>
+                                
+                        <?php
+                            }
+                        ?>
+
                     </div>
                     <span style="font-size: larger;" class="text-secondary">@<?=$profile['username']?></span>
                     <div class="d-flex gap-2 align-items-center my-3">
 
-                        <a class="btn btn-sm btn-primary"><i class="bi bi-file-post-fill"></i> 22 Posts</a>
-                        <a class="btn btn-sm btn-primary"><i class="bi bi-people-fill"></i> 100 Followers</a>
-                        <a class="btn btn-sm btn-primary"><i class="bi bi-person-fill"></i> 50 Following</a>
+                        <a class="btn btn-sm btn-primary"><i class="bi bi-file-post-fill"></i> <?=count($profile_post)?> Posts</a>
+                        <a class="btn btn-sm btn-primary"><i class="bi bi-people-fill"></i> <?=count($profile['followers'])?> Followers</a>
+                        <a class="btn btn-sm btn-primary"><i class="bi bi-person-fill"></i> <?=count($profile['following'])?> Following</a>
 
 
                     </div>
+                    <?php
+                        if($user['id']!=$profile['id']){
+                     
+                        
+                    ?>
+                        <div class="d-flex gap-2 align-items-center my-1">
+                        <button class="btn btn-sm btn-danger unfollowbtn" data-user-id=<?=$profile['id']?>>Unfollow</button>
 
-                    <div class="d-flex gap-2 align-items-center my-1">
-
-                        <a class="btn btn-sm btn-danger">Unfollow</a>
 
 
+                         </div>
+                    <?php
+                        }
+                    ?>
 
-                    </div>
                 </div>
             </div>
 
 
         </div>
         <h3 class="border-bottom">Posts</h3>
-        <div class="gallery d-flex flex-wrap justify-content-center gap-2 mb-4">
+        <?php
+            if(count($profile_post)<1) {
+                echo "<h6 class='p-2 bg-white border rounded text-center'>Kamu Tidak Memiliki Postingan Apapun</h6>";
+            }
+        ?>
+        <div class="gallery d-flex flex-wrap gap-2 mb-4">
             <?php
                 foreach($profile_post as $post) {
                     ?>
