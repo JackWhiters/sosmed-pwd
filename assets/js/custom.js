@@ -18,3 +18,32 @@ function preview()
         image.setAttribute('style','display:');
     }
 }
+
+
+//untuk follow user
+
+$(".followbtn").click(function(){
+    let user_id_v = $(this).data('userId');
+    let button = this;
+    $(button).attr('disabled', true);
+
+    $.ajax({
+        url:'assets/php/ajax.php?follow',
+        method:'post',
+        dataType:'json',
+        data:{user_id: user_id_v },
+        success: function (response) {
+            if(response.status) {
+                // $(button).attr('disabled', true);
+                $(button).data('userId', 0);
+                $(button).html('<i class="bi bi-check-circle-fill"></i> Followed');
+            }
+            else
+            {
+                $(button).attr('disabled', false);
+                alert("Ada yang salah, Coba beberapa saat lagi");
+            }
+        }
+
+    });
+});

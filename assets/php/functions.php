@@ -405,5 +405,70 @@ function validateLoginForm($form_data)
         $run = mysqli_query($db,$query);
         return mysqli_fetch_ALL($run,TRUE);
     }
+
+    //untuk menampilkan userdata berdasarkan username
+    function getUserByUsername($username)
+    {
+        global $db;
+        
+        $query = "SELECT * FROM users WHERE username='$username'";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run);
+    }
+
+    //menampilkan posts berdasarkan id
+    function getPostById($user_id)
+    {
+        global $db;
     
+        $query =   "SELECT * FROM posts WHERE user_id=$user_id ORDER BY id DESC";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_ALL($run,TRUE);
+    }
+
+    //untuk menampilkan users untuk saran follow
+    function getFollowSuggestions()
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id']; 
+        $query = "SELECT * FROM users WHERE id!=$current_user";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_ALL($run,TRUE);
+
+
+    }
+
+    //untuk filter saran follow
+    function filterFollowSuggestion()
+    {
+        $list = getFollowSuggestions();
+        $filter_list = array();
+        foreach($list as $user) {
+            if(!checkFollowStatus($user['id'])){
+                $filter_list[]=$user;
+            }
+        }
+
+        return $filter_list;
+
+    }
+
+    //untuk mengecek user sudah follow atau tidak
+    function checkFollowStatus($user_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="SELECT count(*) as row FROM follow_list WHERE follower_id=$current_user && user_id=$user_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run)['row'];
+    }
+
+    //function untuk follow user
+    function followUser($user_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="INSERT INTO follow_list(follower_id,user_id) VALUES($current_user,$user_id)";
+        return mysqli_query($db,$query);
+    }
 ?>

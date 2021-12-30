@@ -28,6 +28,8 @@ if(isset($_GET['newfp']))
 if(isset($_SESSION['Auth'])) {
     $user = getUser($_SESSION['userdata']['id']);
     $posts = getPost();
+    //untuk saran follow
+    $saran_follow = filterFollowSuggestion();
 }
 
 $pagecount = count($_GET);
@@ -59,6 +61,24 @@ elseif(isset($_SESSION['Auth']) && isset($_GET['editprofile']) && $user['ac_stat
     showPage('header',['page_title'=>'Social media - Edit Profile']);
     showPage('navbar');
     showPage('edit_profile');
+}
+elseif(isset($_SESSION['Auth']) && isset($_GET['u']) && $user['ac_status']==1)
+{
+    $profile = getUserByUsername($_GET['u']);
+    // print_r($profile);
+    if(!$profile){
+        showPage('header',['page_title'=>'Social media - User Tidak Ditemukan']);
+        showPage('navbar');
+        showPage('user_tidak_ditemukan');
+    }
+    else {
+        $profile_post = getPostById($profile['id']);
+        // print_r($profile_post);
+        showPage('header',['page_title'=>$profile['first_name'].' '.$profile['last_name']]);
+        showPage('navbar');
+        showPage('profile');
+    }
+
 }
 elseif(isset($_GET['daftar']))
 {
