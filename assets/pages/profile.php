@@ -240,7 +240,7 @@
                                 if(checkFollowStatus($f['user_id'])){
                                     $fbtn= '<button class="btn btn-sm btn-danger unfollowbtn" data-user-id='.$fuser['id'].'>Unfollow</button>';
                                 }
-                                else if($user['id']==$f['follower_id']){
+                                else if($user['id']==$f['user_id']){
                                     $fbtn='';
                                 }else{
                                     $fbtn= '<button class="btn btn-sm btn-primary followbtn" data-user-id='.$fuser['id'].'>Follow</button>';
