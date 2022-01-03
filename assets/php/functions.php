@@ -514,6 +514,43 @@ function validateLoginForm($form_data)
         $current_user = $_SESSION['userdata']['id'];
         $query="DELETE FROM follow_list WHERE follower_id=$current_user && user_id=$user_id";
         return mysqli_query($db,$query);
-    }    
+    }
+
+    //function untuk like post
+    function like($post_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="INSERT INTO likes(post_id,user_id) VALUES($post_id,$current_user)";
+        return mysqli_query($db,$query);
+    }
+
+    //untuk mengecek status like
+    function checkLikeStatus($post_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="SELECT count(*) as row FROM likes WHERE user_id=$current_user && post_id=$post_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run)['row'];
+    }
+
+    //function untuk unlike post
+    function unlike($post_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="DELETE FROM likes WHERE user_id=$current_user && post_id=$post_id";
+        return mysqli_query($db,$query);
+    }
+
+    //function untuk mendapatkan jumlah like status
+    function getLikes($post_id)
+    {
+        global $db;
+        $query="SELECT * FROM likes WHERE post_id=$post_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_all($run);
+    }
 
 ?>

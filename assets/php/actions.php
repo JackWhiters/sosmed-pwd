@@ -46,7 +46,7 @@ if(isset($_GET['login']))
    {
        $_SESSION['Auth'] = true;
        $_SESSION['userdata'] = $response['user']; 
-
+       
        //ditambahkan setelah menggunakan PHPMailer
        if($response['user']['ac_status']==0)
        {

@@ -13,6 +13,7 @@
             }
                 foreach($posts as $post)
                 {
+                    $likes = getLikes($post['id']);
                     ?>
                 <div class="card mt-4">
                     <div class="card-title d-flex justify-content-between  align-items-center">
@@ -25,9 +26,26 @@
                         </div>
                 </div>
                 <img src="assets/images/posts/<?=$post['post_img']?>" class="" alt="...">
-                <h4 style="font-size: x-larger" class="p-2 border-bottom"><i class="bi bi-heart"></i>&nbsp;&nbsp;<i
-                        class="bi bi-chat-left"></i>
+                <h4 style="font-size: x-larger" class="p-2 border-bottom">
+                <span class="likebtns">
+                <?php
+                    if(checkLikeStatus($post['id'])){
+                        $like_btn_display='none';
+                        $unlike_btn_display = '';
+                    } else {
+                        $like_btn_display='';
+                        $unlike_btn_display = 'none';
+                    }
+                        ?>
+
+                    <i class="bi bi-heart-fill unlike_btn" style="display:<?=$unlike_btn_display?>" data-user-id='<?=$user['id']?>' data-post-id='<?=$post['id']?>'></i>
+                    <i class="bi bi-heart like_btn" style="display:<?=$like_btn_display?>" data-user-id='<?=$user['id']?>' data-post-id='<?=$post['id']?>'></i>
+                </span>
+                &nbsp;&nbsp;<i
+                        class="bi bi-chat-left"></i><br>
+                        
                 </h4>
+                <span class="p-1 mx-2"><?=count($likes)?> likes </span>
 
                     <?php
                         if($post['post_text'])
@@ -41,7 +59,6 @@
                         }
                     ?>
                     
-
                 
 
                 <div class="input-group p-2 border-top">
