@@ -550,7 +550,28 @@ function validateLoginForm($form_data)
         global $db;
         $query="SELECT * FROM likes WHERE post_id=$post_id";
         $run = mysqli_query($db,$query);
-        return mysqli_fetch_all($run);
+        return mysqli_fetch_all($run,TRUE);
     }
+
+    //function untuk membuat komment
+    function addComment($post_id,$comment)
+    {
+        global $db;
+        $comment = mysqli_real_escape_string($db,$comment);
+        $current_user = $_SESSION['userdata']['id'];
+        $query="INSERT INTO comments(post_id,user_id,comment) VALUES($post_id,$current_user,'$comment')";
+        return mysqli_query($db,$query);
+    }
+
+
+    //function untuk mendapatkan koment
+    function getComment($post_id)
+    {
+        global $db;
+        $query="SELECT * FROM comments WHERE post_id=$post_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_all($run,TRUE);
+    }
+    
 
 ?>

@@ -57,5 +57,34 @@ if(isset($_GET['unlike'])) {
 
 }
 
+if(isset($_GET['addcomment'])) {
+    $post_id = $_POST['post_id'];
+    $comment = $_POST['comment'];
+
+    // if(checkLikeStatus($post_id)){
+        // if(unlike($post_id)) {
+
+        if(addComment($post_id,$comment))
+            {
+                $cuser = getuser($_SESSION['userdata']['id']);
+                $response['status']  = TRUE;
+                $response['comment'] = ' <div class="d-flex align-items-center p-2">
+                                            <div><img src="assets/images/profile/'.$cuser['profile_pic'].'" alt="" height="40" class="rounded-circle border">
+                                            </div>
+                                            <div>&nbsp;&nbsp;&nbsp;</div>
+                                            <div class="d-flex flex-column justify-content-start align-items-start">
+                                                <h6 style="margin: 0px;"><a href="?u='.$cuser['username'].'" class="text-decoration-none text-dark">@'.$cuser['username'].'</a></h6>
+                                                <p style="margin:0px;" class="text-muted">'.$_POST['comment'].'</p>
+                                            </div>
+                                        </div>';
+            } else {
+                $response['status'] = FALSE;
+            }
+        
+            echo json_encode($response);
+    // }
+
+}
+
 
 ?>
