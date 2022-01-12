@@ -399,11 +399,10 @@ function validateLoginForm($form_data)
     function getPost()
     {
         global $db;
-    
-        $query =   "SELECT posts.id, posts.user_id, posts.post_img, posts.post_text, posts.created_at, users.first_name, users.last_name, users.username, users.profile_pic
-                    FROM posts JOIN users ON users.id=posts.user_id ORDER BY id DESC";
+        $query = "SELECT users.id as uid,posts.id,posts.user_id,posts.post_img,posts.post_text,posts.created_at,users.first_name,users.last_name,users.username,users.profile_pic FROM posts JOIN users ON users.id=posts.user_id ORDER BY id DESC";
+       
         $run = mysqli_query($db,$query);
-        return mysqli_fetch_ALL($run,TRUE);
+        return mysqli_fetch_all($run,true);
     }
 
     //untuk menampilkan userdata berdasarkan username
@@ -444,7 +443,7 @@ function validateLoginForm($form_data)
         $list = getFollowSuggestions();
         $filter_list = array();
         foreach($list as $user) {
-            if(!checkFollowStatus($user['id']) && count($filter_list)<5){
+            if(!checkFollowStatus($user['id']) && !checkBS($user['id']) && count($filter_list)<5){
                 $filter_list[]=$user;
             }
         }
@@ -467,8 +466,11 @@ function validateLoginForm($form_data)
     function followUser($user_id)
     {
         global $db;
+        $cu = getUser($_SESSION['userdata']['id']);
         $current_user = $_SESSION['userdata']['id'];
         $query="INSERT INTO follow_list(follower_id,user_id) VALUES($current_user,$user_id)";
+
+        createNotification($cu['id'],$user_id,"Mulai mengikutimu !");
         return mysqli_query($db,$query);
     }
 
@@ -513,6 +515,8 @@ function validateLoginForm($form_data)
         global $db;
         $current_user = $_SESSION['userdata']['id'];
         $query="DELETE FROM follow_list WHERE follower_id=$current_user && user_id=$user_id";
+
+        createNotification($current_user,$user_id,"Berhenti mengikutimu !");
         return mysqli_query($db,$query);
     }
 
@@ -522,6 +526,10 @@ function validateLoginForm($form_data)
         global $db;
         $current_user = $_SESSION['userdata']['id'];
         $query="INSERT INTO likes(post_id,user_id) VALUES($post_id,$current_user)";
+        $poster_id = getPosterId($post_id);
+        if($poster_id!=$current_user){
+            createNotification($current_user,$poster_id,"menyukai postinganmu !",$post_id);
+           }
         return mysqli_query($db,$query);
     }
 
@@ -553,25 +561,161 @@ function validateLoginForm($form_data)
         return mysqli_fetch_all($run,TRUE);
     }
 
-    //function untuk membuat komment
+    //function untuk membuat kommentar
     function addComment($post_id,$comment)
     {
         global $db;
         $comment = mysqli_real_escape_string($db,$comment);
         $current_user = $_SESSION['userdata']['id'];
         $query="INSERT INTO comments(post_id,user_id,comment) VALUES($post_id,$current_user,'$comment')";
+
+        $poster_id = getPosterId($post_id);
+
+        if($poster_id!=$current_user){
+            createNotification($current_user,$poster_id,"commented on your post",$post_id);
+        }
         return mysqli_query($db,$query);
     }
 
 
-    //function untuk mendapatkan koment
-    function getComment($post_id)
+    //function untuk mendapatkan komentar
+    function getComments($post_id)
     {
         global $db;
         $query="SELECT * FROM comments WHERE post_id=$post_id";
         $run = mysqli_query($db,$query);
         return mysqli_fetch_all($run,TRUE);
     }
+
+    //function untuk blokir user
+    function blockUser($blocked_user_id)
+    {
+        global $db;
+        $cu = getUser($_SESSION['userdata']['id']);
+        $current_user=$_SESSION['userdata']['id'];
+        $query="INSERT INTO block_list(user_id,blocked_user_id) VALUES($current_user,$blocked_user_id)";
+    
+        createNotification($cu['id'],$blocked_user_id,"blocked you");
+        $query2="DELETE FROM follow_list WHERE follower_id=$current_user && user_id=$blocked_user_id";
+        mysqli_query($db,$query2);
+        $query3="DELETE FROM follow_list WHERE follower_id=$blocked_user_id && user_id=$current_user";
+        mysqli_query($db,$query3);
+
+    
+        return mysqli_query($db,$query);
+        
+    }
+
+    //function untuk unblock
+    function unblockUser($user_id){
+        global $db;
+        $current_user=$_SESSION['userdata']['id'];
+        $query="DELETE FROM block_list WHERE user_id=$current_user && blocked_user_id=$user_id";
+        createNotification($current_user,$user_id,"Unblocked you !");
+        return mysqli_query($db,$query);   
+    }
+
+    ////function untuk mengecek status block
+    function checkBlockStatus($current_user,$user_id)
+    {
+        global $db;
+        
+        $query="SELECT count(*) as row FROM block_list WHERE user_id=$current_user && blocked_user_id=$user_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run)['row'];
+    }
+    
+    //function untuk verifikasi mengecek status block
+    function checkBS($user_id)
+    {
+        global $db;
+        $current_user = $_SESSION['userdata']['id'];
+        $query="SELECT count(*) as row FROM block_list WHERE (user_id=$current_user && blocked_user_id=$user_id) || (user_id=$user_id && blocked_user_id=$current_user)";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run)['row'];
+    }
+
+    //function untuk membuat notification
+    function createNotification($from_user_id,$to_user_id,$msg,$post_id=0){
+        global $db;
+        $query="INSERT INTO notifications(from_user_id,to_user_id,message,post_id) VALUES($from_user_id,$to_user_id,'$msg',$post_id)";
+        mysqli_query($db,$query);    
+    }
+
+  
+    //function untuk mendapatkan notifications
+    function getNotifications()
+    {
+        global $db;
+        $cu_user_id = $_SESSION['userdata']['id'];
+        $query="SELECT * FROM notifications WHERE to_user_id=$cu_user_id ORDER BY id DESC";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_all($run,true);
+    }
+
+
+    //untuk mendapatkan notifikasi yang belum dibaca jika belum akan diberi kode status 0
+    function getUnreadNotificationsCount()
+    {
+        global $db;
+        $cu_user_id = $_SESSION['userdata']['id'];
+        $query="SELECT count(*) as row FROM notifications WHERE to_user_id=$cu_user_id && read_status=0 ORDER BY id DESC";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run)['row'];
+    }
+
+    //function untuk menampilkan waktu
+    function show_time($time)
+    {
+        return '<time style="font-size:small" class="timeago text-muted text-small" datetime="'.$time.'"></time>';
+    }
+
+    //function untuk mengatur notifikasi apabila sudah terbaca maka akan diberi kode status=1
+    function setNotificationStatusAsRead()
+    {
+        $cu_user_id = $_SESSION['userdata']['id'];
+        global $db;
+        $query="UPDATE notifications SET read_status=1 WHERE to_user_id=$cu_user_id";
+        return mysqli_query($db,$query);
+    }
+
+    //function untuk medelete atau menghapus postingan
+    function deletePost($post_id)
+    {
+        global $db;
+        $user_id=$_SESSION['userdata']['id'];
+            $dellike = "DELETE FROM likes WHERE post_id=$post_id && user_id=$user_id";
+            mysqli_query($db,$dellike);
+            $delcom = "DELETE FROM comments WHERE post_id=$post_id && user_id=$user_id";
+            mysqli_query($db,$delcom);
+            $not = "UPDATE notifications SET read_status=2 WHERE post_id=$post_id && to_user_id=$user_id";
+        mysqli_query($db,$not);
+
+
+        $query = "DELETE FROM posts WHERE id=$post_id";
+        return mysqli_query($db,$query);
+    }
+
+//function untuk mendapatkan postingan berdasarkan id hanya memangil 1 postingan
+    function getPosterId($post_id)
+    {
+        global $db;
+        $query = "SELECT user_id FROM posts WHERE id=$post_id";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_assoc($run)['user_id'];
+
+    }
+
+    //function untuk mencari user
+    function searchUser($keyword)
+    {
+        global $db;
+        $query = "SELECT * FROM users WHERE username LIKE '%".$keyword."%' || (first_name LIKE '%".$keyword."%' || last_name LIKE '%".$keyword."%') LIMIT 5";
+        $run = mysqli_query($db,$query);
+        return mysqli_fetch_all($run,true);
+
+    }
+
     
 
 ?>

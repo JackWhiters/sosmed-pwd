@@ -228,4 +228,28 @@ if(isset($_GET['addpost']))
         header("location:../../");
     }
 }
+
+//untuk memblokir users
+if(isset($_GET['block'])){
+    $user_id = $_GET['block'];
+    $user = $_GET['username']; 
+      if(blockUser($user_id)){
+          header("location:../../?u=$user");
+      }else{
+          echo "ada yang salah";
+      }
+  
+    
+  }
+
+//untuk menghapus postingan
+if(isset($_GET['deletepost'])){
+    $post_id = $_GET['deletepost'];
+    if(deletePost($post_id)){
+        header("location:{$_SERVER['HTTP_REFERER']}");
+    }else{
+        echo "ada yang salah";
+    }
+  }
+
 ?>

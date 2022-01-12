@@ -1,200 +1,247 @@
 //untuk melihat preview foto poster
 var input = document.querySelector("#select_post_img");
 
-input.addEventListener("change",preview);
+input.addEventListener("change", preview);
 
-function preview()
-{
-    var fileobject = this.files[0];
-    var filereader = new FileReader();
+function preview() {
+  var fileobject = this.files[0];
+  var filereader = new FileReader();
 
-    filereader.readAsDataURL(fileobject);
+  filereader.readAsDataURL(fileobject);
 
-    filereader.onload = function()
-    {
-        var image_src = filereader.result;
-        var image = document.querySelector("#post_img");
-        image.setAttribute('src',image_src);
-        image.setAttribute('style','display:');
-    }
+  filereader.onload = function () {
+    var image_src = filereader.result;
+    var image = document.querySelector("#post_img");
+    image.setAttribute("src", image_src);
+    image.setAttribute("style", "display:");
+  };
 }
-
 
 //untuk follow user
 
-$(".followbtn").click(function(){
-    var user_id_v = $(this).data('userId');
-    var button = this;
-    $(button).attr('disabled', true);
+$(".followbtn").click(function () {
+  var user_id_v = $(this).data("userId");
+  var button = this;
+  $(button).attr("disabled", true);
 
-    $.ajax({
-        url:'assets/php/ajax.php?follow',
-        method:'post',
-        dataType:'json',
-        data:{user_id: user_id_v },
-        success: function (response) {
-            if(response.status) {
-                // $(button).attr('disabled', true);
-                $(button).data('userId', 0);
-                $(button).html('<i class="bi bi-check-circle-fill"></i> Followed');
-            }
-            else
-            {
-                $(button).attr('disabled', false);
-                alert("Ada yang salah, Coba beberapa saat lagi");
-            }
-        }
-
-    });
+  $.ajax({
+    url: "assets/php/ajax.php?follow",
+    method: "post",
+    dataType: "json",
+    data: { user_id: user_id_v },
+    success: function (response) {
+      if (response.status) {
+        // $(button).attr('disabled', true);
+        $(button).data("userId", 0);
+        $(button).html('<i class="bi bi-check-circle-fill"></i> Followed');
+      } else {
+        $(button).attr("disabled", false);
+        alert("Ada yang salah, Coba beberapa saat lagi");
+      }
+    },
+  });
 });
 
 //untuk unfollow user
 
-$(".unfollowbtn").click(function(){
-    var user_id_v = $(this).data('userId');
-    var button = this;
-    $(button).attr('disabled', true);
+$(".unfollowbtn").click(function () {
+  var user_id_v = $(this).data("userId");
+  var button = this;
+  $(button).attr("disabled", true);
 
-    $.ajax({
-        url:'assets/php/ajax.php?unfollow',
-        method:'post',
-        dataType:'json',
-        data:{user_id: user_id_v },
-        success: function (response) {
-            if(response.status) {
-                // $(button).attr('disabled', true);
-                $(button).data('userId', 0);
-                $(button).html('<i class="bi bi-check-circle-fill"></i> Unfollowed');
-            }
-            else
-            {
-                $(button).attr('disabled', false);
-                alert("Ada yang salah, Coba beberapa saat lagi");
-            }
-        }
-
-    });
+  $.ajax({
+    url: "assets/php/ajax.php?unfollow",
+    method: "post",
+    dataType: "json",
+    data: { user_id: user_id_v },
+    success: function (response) {
+      if (response.status) {
+        // $(button).attr('disabled', true);
+        $(button).data("userId", 0);
+        $(button).html('<i class="bi bi-check-circle-fill"></i> Unfollowed');
+      } else {
+        $(button).attr("disabled", false);
+        alert("Ada yang salah, Coba beberapa saat lagi");
+      }
+    },
+  });
 });
-
 
 //Untuk Like post
-$(".like_btn").click(function(){
-    // alert('testing');
-    // return
-    var post_id_v = $(this).data('postId');
-    var button = this;
-    $(button).attr('disabled', true);
+$(".like_btn").click(function () {
+  // alert('testing');
+  // return
+  var post_id_v = $(this).data("postId");
+  var button = this;
+  $(button).attr("disabled", true);
 
-    $.ajax({
-        url:'assets/php/ajax.php?like',
-        method:'post',
-        dataType:'json',
-        data:{post_id:post_id_v},
-        success: function (response) {
+  $.ajax({
+    url: "assets/php/ajax.php?like",
+    method: "post",
+    dataType: "json",
+    data: { post_id: post_id_v },
+    success: function (response) {
+      console.log(response);
+      if (response.status) {
+        $(button).attr("disabled", false);
 
-            console.log(response);
-            if(response.status) {
-                $(button).attr('disabled', false);
-
-                // $(button).data('userId', 0);
-                // $(button).attr('class', 'bi bi-heart-fill unlike_btn')
-                // button = null;
-                $(button).hide();
-                $(button).siblings('.unlike_btn').show();
-                location.reload();
-            }
-            else
-            {
-                $(button).attr('disabled', false);
-                alert("Ada yang salah, Coba beberapa saat lagi");
-            }
-        }
-
-    });
+        // $(button).data('userId', 0);
+        // $(button).attr('class', 'bi bi-heart-fill unlike_btn')
+        // button = null;
+        $(button).hide();
+        $(button).siblings(".unlike_btn").show();
+        location.reload();
+      } else {
+        $(button).attr("disabled", false);
+        alert("Ada yang salah, Coba beberapa saat lagi");
+      }
+    },
+  });
 });
-
 
 //Untuk Unlike post
-$(".unlike_btn").click(function(){
-    // alert('testing');
-    // return
-    var post_id_v = $(this).data('postId');
-    var button = this;
-    $(button).attr('disabled', true);
+$(".unlike_btn").click(function () {
+  // alert('testing');
+  // return
+  var post_id_v = $(this).data("postId");
+  var button = this;
+  $(button).attr("disabled", true);
 
-    $.ajax({
-        url:'assets/php/ajax.php?unlike',
-        method:'post',
-        dataType:'json',
-        data:{post_id:post_id_v},
-        success: function (response) {
+  $.ajax({
+    url: "assets/php/ajax.php?unlike",
+    method: "post",
+    dataType: "json",
+    data: { post_id: post_id_v },
+    success: function (response) {
+      console.log(response);
+      if (response.status) {
+        $(button).attr("disabled", false);
 
-            console.log(response);
-            if(response.status) {
-                $(button).attr('disabled', false);
-
-                // $(button).data('userId', 0);
-                // $(button).attr('class', 'bi bi-heart like_btn')
-                // button = null;
-                $(button).hide();
-                $(button).siblings('.like_btn').show();
-                location.reload();
-
-            }
-            else
-            {
-                $(button).attr('disabled', false);
-                alert("Ada yang salah, Coba beberapa saat lagi");
-            }
-        }
-
-    });
+        // $(button).data('userId', 0);
+        // $(button).attr('class', 'bi bi-heart like_btn')
+        // button = null;
+        $(button).hide();
+        $(button).siblings(".like_btn").show();
+        location.reload();
+      } else {
+        $(button).attr("disabled", false);
+        alert("Ada yang salah, Coba beberapa saat lagi");
+      }
+    },
+  });
 });
 
-
 //untuk menambahkan komentar
-$(".add-comment").click(function(){
-    // alert('testing');
-    // return
-    var button = this;
-    var comment_v = $(button).siblings('.comment-input').val();
-    if (comment_v =='') {
-        return 0;
-    }
-    var post_id_v = $(this).data('postId');
-    var cs = $(this).data('cs');
-    var page = $(this).data('page');
-    // $("#"+cs).append('test');
-    $(button).attr('disabled', true);
-    $(button).siblings('.comment-input').attr('disabled',true);
-    
-    $.ajax({
-        url:'assets/php/ajax.php?addcomment',
-        method:'post',
-        dataType:'json',
-        data:{ post_id:post_id_v, comment: comment_v },
-        success: function (response) {
-            console.log(response);
+$(".add-comment").click(function () {
+  // alert('testing');
+  // return
+  var button = this;
+  var comment_v = $(button).siblings(".comment-input").val();
+  if (comment_v == "") {
+    return 0;
+  }
+  var post_id_v = $(this).data("postId");
+  var cs = $(this).data("cs");
+  var page = $(this).data("page");
+  // $("#"+cs).append('test');
+  $(button).attr("disabled", true);
+  $(button).siblings(".comment-input").attr("disabled", true);
 
-            if(response.status) {
-                $(button).attr('disabled', false);
-                $(button).siblings('.comment-input').attr('disabled',false);
-                $(button).siblings('.comment-input').val('');
-                $("#"+cs).append(response.comment);
-                $('.nocomment').hide();
-                if(page='wall'){
-                    location.reload();
-                }
+  $.ajax({
+    url: "assets/php/ajax.php?addcomment",
+    method: "post",
+    dataType: "json",
+    data: { post_id: post_id_v, comment: comment_v },
+    success: function (response) {
+      console.log(response);
 
-            }
-            else
-            {
-                $(button).attr('disabled', false);
-                (button).siblings('.comment-input').attr('disabled',false);
-
-                alert("Ada yang salah, Coba beberapa saat lagi");
-            }
+      if (response.status) {
+        $(button).attr("disabled", false);
+        $(button).siblings(".comment-input").attr("disabled", false);
+        $(button).siblings(".comment-input").val("");
+        $("#" + cs).append(response.comment);
+        $(".nocomment").hide();
+        if (page == "wall") {
+          location.reload();
         }
+      } else {
+        $(button).attr("disabled", false);
+        button.siblings(".comment-input").attr("disabled", false);
 
-    });
+        alert("Ada yang salah, Coba beberapa saat lagi");
+      }
+    },
+  });
+});
+
+//untuk menampilkan hasil pencarian
+var sr = false;
+$("#search").focus(function () {
+  $("#search_result").show();
+});
+
+//untuk menutup hasil pencarian
+$("#close_search").click(function () {
+  $("#search_result").hide();
+});
+
+//untuk manajement pencarian
+$("#search").keyup(function () {
+  var keyword_v = $(this).val();
+
+  $.ajax({
+    url: "assets/php/ajax.php?search",
+    method: "post",
+    dataType: "json",
+    data: { keyword: keyword_v },
+    success: function (response) {
+      console.log(response);
+      if (response.status) {
+        $("#sra").html(response.users);
+      } else {
+        $("#sra").html('<p class="text-center text-muted">no user found !</p>');
+      }
+    },
+  });
+});
+
+jQuery(document).ready(function () {
+  jQuery("time.timeago").timeago();
+});
+
+$("#show_not").click(function () {
+  $.ajax({
+    url: "assets/php/ajax.php?notread",
+    method: "post",
+    dataType: "json",
+    success: function (response) {
+      if (response.status) {
+        $(".un-count").hide();
+      }
+    },
+  });
+});
+
+//untuk tombol unblock
+$(".unblockbtn").click(function () {
+  var user_id_v = $(this).data("userId");
+  var button = this;
+  $(button).attr("disabled", true);
+  console.log("clicked");
+  $.ajax({
+    url: "assets/php/ajax.php?unblock",
+    method: "post",
+    dataType: "json",
+    data: { user_id: user_id_v },
+    success: function (response) {
+      console.log(response);
+      if (response.status) {
+        location.reload();
+      } else {
+        $(button).attr("disabled", false);
+
+        alert("ada yang salah coba beberapa saat lagi");
+      }
+    },
+  });
 });
