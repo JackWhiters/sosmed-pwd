@@ -245,3 +245,91 @@ $(".unblockbtn").click(function () {
     },
   });
 });
+
+
+//variable deklarasi user untuk chat berdasarkan id
+let chatting_user_id = 0;
+
+$(".chatlist_item").click();
+function popchat(user_id) {
+  $("#user_chat").html(`<div class="spinner-border text-center" role="status"></div>`);
+        $("#chatter_username").text('Tunggu Sebentar..');
+        $("#chatter_name").text('');
+        $("#chatter_pic").attr('src', 'assets/images/profile/default_profile.jpg');
+  chatting_user_id = user_id;
+  $("#sendmsg").attr('data-user-id',user_id);
+  console.log(user_id);
+}
+
+
+$("#sendmsg").click(function () {
+  let user_id = chatting_user_id;
+  let msg = $("#msginput").val();
+  if(!msg) return;
+  // console.log(user_id);
+  // console.log(msg);
+
+  $("#sendmsg").attr("disabled",true);
+  $("#msginput").attr("disabled",true);
+  $.ajax({
+    url:'assets/php/ajax.php?kirimpesan',
+    method:'post',
+    dataType:'json',
+    data:{ user_id: user_id,msg: msg},
+    success: function(response) {
+      console.log(response);
+     if(response.status){
+      $("#sendmsg").attr("disabled",false);
+      $("#msginput").attr("disabled",false);
+      $("#msginput").val('');
+     }
+     else{
+        alert("ada yang salah, silahkan coba lagi");  
+     }
+      }
+  })
+})
+
+function synmsg() {
+  $.ajax({
+    url:'assets/php/ajax.php?pesan',
+    method:'post',
+    dataType:'json',
+    data:{ chatter_id: chatting_user_id},
+    success: function(response) {
+      console.log(response);
+      $("#chatlist").html(response.chatlist);
+      if(response.newmsgcount==0)
+      {
+        $("#msgcounter").hide();
+      } else {
+        $("#msgcounter").show();
+        $("#msgcounter").html("<small>"+ response.newmsgcount + "</small>");
+      }
+      // $("#user_chat").html(response.chat.msgs);
+      if(response.blocked)
+      {
+        $("#msgsender").hide();
+        $("#blocked_chat").show();
+      } else {
+        $("#msgsender").show();
+        $("#blocked_chat").hide();
+      }
+
+      if(chatting_user_id!=0)
+      {
+        $("#user_chat").html(response.chat.msgs);
+        $("#chatter_username").text(response.chat.userdata.username);
+        $("#chatter_name").text(response.chat.userdata.first_name +' ' + response.chat.userdata.last_name);
+        $("#chatter_pic").attr('src', 'assets/images/profile/' + response.chat.userdata.profile_pic);
+      }
+
+    }
+  })
+}
+
+//interval refresh memanggil ulang fungsi synchronous pesan
+setInterval(() => {
+  synmsg();
+}, 1000)
+

@@ -75,6 +75,57 @@
         </div>
     </div>
 
+    
+
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="message_sidebar" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Pesan</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="chatlist">
+               
+
+          
+    
+        </div>
+    </div>
+
+    <!--Modal Chat -->
+    <div class="modal fade" id="chatbox" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">        
+        <h5 class="modal-title" id="exampleModalLabel"><img src="assets/images/profile/default_profile.jpg" id="chatter_pic" height="40" width="40" class="m-1 rounded-circle border"><span id="chatter_name"> </span>(@<span id="chatter_username">Tunggu Sebentar..</span>)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-column-reverse gap-2" id="user_chat">
+          Tunggu Sebentar...
+        <!-- <div class="py-2 px-3 border rounded shadow-sm col-8 d-inline-block">
+            Halo apa Kabar<br>
+            <span style="font-size:small" class="text-muted">13:04, 07-03-2022</span>
+        </div>
+
+        <div class="py-2 px-3 border rounded shadow-sm col-8 align-self-end d-inline-block bg-primary text-light">
+            Aku Oke Mas<br>
+            <span style="font-size:small" class="text-light">13:04, 07-03-2022</span>
+        </div> -->
+      </div>
+      <div class="modal-footer">
+          <p class="p-2 text-danger mx-auto" id="blocked_chat" style="display:none">
+              <i class="bi bi-x-octagon-fill"></i> Kamu Tidak Diizinkan Mengirim Pesan Ke User ini
+            </p>
+      <div class="input-group p-2" id="msgsender">
+                            <input type="text" class="form-control rounded-0 border-0" id="msginput" placeholder="Ketikan Sesuatu.."
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-primary rounded-0 border-0" id="sendmsg" data-user-id="0"  type="button"
+                                >Kirim</button>
+                        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php } ?>
 
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
