@@ -168,7 +168,7 @@ function validateLoginForm($form_data)
 
     if(!$blank && !checkUser($form_data)['status'])
     {
-        $response['msg']="username tidak ada";
+        $response['msg']="Username atau password Salah";
         $response['status']=false;
         $response['field']='checkuser';
 
@@ -404,6 +404,16 @@ function validateLoginForm($form_data)
         $run = mysqli_query($db,$query);
         return mysqli_fetch_all($run,true);
     }
+
+        //untuk menampilkan posts
+        function getPostMading()
+        {
+            global $db;
+            $query = "SELECT users.id as uid,posts.id,posts.user_id,posts.post_img,posts.post_text,posts.created_at,users.first_name,users.last_name,users.username,users.profile_pic FROM posts JOIN users ON users.id=posts.user_id && ac_status=4 ORDER BY id DESC";
+           
+            $run = mysqli_query($db,$query);
+            return mysqli_fetch_all($run,true);
+        }
 
     //untuk menampilkan userdata berdasarkan username
     function getUserByUsername($username)

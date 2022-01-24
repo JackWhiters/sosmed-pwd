@@ -4,7 +4,59 @@
  global $saran_follow;
  
  ?>
-    <div class="container col-md-10 col-sm-12 col-lg-9 rounded-0 d-flex justify-content-between">
+ <div class="wrapper">
+  <div class="left-side">
+   <div class="side-wrapper">
+    <div class="side-title"></div>
+    <div class="side-menu">
+
+    </div>
+   </div>
+   <div class="side-wrapper">
+    <div class="side-menu">
+                <div class="d-flex align-items-center p-2">
+                <div><img src="assets/images/profile/<?=$user['profile_pic']?>" alt="" height="60" width="60" class="rounded-circle border">
+                </div>
+                <div>&nbsp;&nbsp;&nbsp;</div>
+                <div class="d-flex flex-column justify-content-center">
+                <a href='?u=<?=$user['username']?>' class="text-decoration-none text-dark"><h6 style="margin: 0px;"><?=$user['first_name']?> <?=$user['last_name']?></h6></a>
+                    <p style="margin:0px;" class="text-muted">@<?=$user['username']?></p>
+                </div>
+            </div>
+
+            <div>
+                    <div class="side-title">Kamu Bisa Follow Mereka</div>
+                <?php
+                    foreach($saran_follow as $suser){
+                ?>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center p-2">
+                        <div><img src="assets/images/profile/<?=$suser['profile_pic']?>" alt="" max-height="20px" max-width="20px" class="rounded-circle border">
+                        </div>
+                        <div>&nbsp;&nbsp;</div>
+                        <div class="d-flex flex-column justify-content-center">
+                            <a href='?u=<?=$suser['username']?>' class="text-decoration-none text-dark"><h6 style="margin: 0px;font-size: small;"><?=$suser['first_name']?> <?=$suser['last_name']?></h6></a>
+                            <p style="margin:0px;font-size:small" class="text-muted">@<?=$suser['username']?></p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-sm btn-primary followbtn" data-user-id='<?=$suser['id']?>' >Follow</button>
+
+                    </div>
+                </div>
+                <?php
+                    }
+                    if(count($saran_follow)<1){
+                        echo "<p class='warna border rounded text-center'>Tidak Ada Saran</p>";
+                    }
+                ?>
+            </div>
+    </div>
+   </div>
+  </div>
+  <div class="main-container">
+   <div class="content-wrapper">
+    <div class="container col-md-10 col-sm-12 col-lg-12 rounded-0 d-flex justify-content-between">
         <div class="col-md-8 col-sm-12" style="max-width:93vw">
             <?php
             showError('post_img');
@@ -16,17 +68,19 @@
                 $likes = getLikes($post['id']);
                 $comments = getComments($post['id']);
                 ?>
-     <div class="card mt-4">
+                    <div class="content-section">
+                        <div class="app-card">
+            <div class="warna card mt-4">
                 <div class="card-title d-flex justify-content-between  align-items-center">
                     <div class="d-flex align-items-center p-2">
                         <img src="assets/images/profile/<?=$post['profile_pic']?>" alt="" height="30" width="30" class="rounded-circle border">&nbsp;&nbsp;<a href='?u=<?=$post['username']?>' class="text-decoration-none text-dark"><?=$post['first_name']?> <?=$post['last_name']?></a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2" style="height:0px;">
                         <?php
                     if($post['uid']==$user['id']){
                         ?>
                     <div class="dropdown">
-                        <i class="bi bi-three-dots-vertical" id="option<?=$post['id']?>" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <i class="bi bi-three-dots" style="font-size:2rem;"  id="option<?=$post['id']?>" data-bs-toggle="dropdown" aria-expanded="false"></i>
                         <ul class="dropdown-menu" aria-labelledby="option<?=$post['id']?>">
                             <li><a class="dropdown-item" href="assets/php/actions.php?deletepost=<?=$post['id']?>"><i class="bi bi-trash-fill"></i> Delete Post</a></li>
                         </ul>
@@ -37,6 +91,7 @@
                       
                     </div>
                 </div>
+                
                 <img src="assets/images/posts/<?=$post['post_img']?>" loading=lazy class="" alt="...">
                 <h4 style="font-size: x-larger" class="p-2 border-bottom d-flex">
                <span>
@@ -75,7 +130,8 @@
                     id="button-addon2">Kirim</button>
                 </div>
         </div>
-            <div class="modal fade" id="postview<?=$post['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+     <div class="modal fade warna" id="postview<?=$post['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body d-md-flex p-0">
@@ -115,7 +171,7 @@
                             <?php
                                 if(count($comments)<1){
                             ?>
-                                <p class="p-3 text-center my-2 nce">no comments</p>
+                                <p class="p-3 text-center my-2 nocomment">no comments</p>
                             <?php
                                 }
                                 foreach($comments as $comment){
@@ -202,43 +258,9 @@
             ?>
     </div>
         <div class="col-lg-4 col-sm-0 overflow-hidden mt-4 p-sm-0 p-md-3">
-            <div class="d-flex align-items-center p-2">
-                <div><img src="assets/images/profile/<?=$user['profile_pic']?>" alt="" height="60" width="60" class="rounded-circle border">
-                </div>
-                <div>&nbsp;&nbsp;&nbsp;</div>
-                <div class="d-flex flex-column justify-content-center">
-                <a href='?u=<?=$user['username']?>' class="text-decoration-none text-dark"><h6 style="margin: 0px;"><?=$user['first_name']?> <?=$user['last_name']?></h6></a>
-                    <p style="margin:0px;" class="text-muted">@<?=$user['username']?></p>
-                </div>
-            </div>
-
-            <div>
-                <h6 class="text-muted p-2">Kamu Bisa Follow Mereka</h6>
-                <?php
-                    foreach($saran_follow as $suser){
-                ?>
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center p-2">
-                        <div><img src="assets/images/profile/<?=$suser['profile_pic']?>" alt="" height="40" width="40" class="rounded-circle border">
-                        </div>
-                        <div>&nbsp;&nbsp;</div>
-                        <div class="d-flex flex-column justify-content-center">
-                            <a href='?u=<?=$suser['username']?>' class="text-decoration-none text-dark"><h6 style="margin: 0px;font-size: small;"><?=$suser['first_name']?> <?=$suser['last_name']?></h6></a>
-                            <p style="margin:0px;font-size:small" class="text-muted">@<?=$suser['username']?></p>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-sm btn-primary followbtn" data-user-id='<?=$suser['id']?>' >Follow</button>
-
-                    </div>
-                </div>
-                <?php
-                    }
-                    if(count($saran_follow)<1){
-                        echo "<p class='p-2 bg-white border rounded text-center'>Untuk Saat ini tidak ada saran</p>";
-                    }
-                ?>
-            </div>
         </div>
     </div>
+        </div>
+</div>
+
    

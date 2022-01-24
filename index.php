@@ -35,7 +35,7 @@ if(isset($_SESSION['Auth'])) {
 $pagecount = count($_GET);
 
 // ROUTES atau manajement page
-if(isset($_SESSION['Auth']) && $user['ac_status']==1 && !$pagecount)
+if((isset($_SESSION['Auth']) && $user['ac_status']==1 && !$pagecount) || (isset($_SESSION['Auth']) && $user['ac_status']==4 && !$pagecount))
 {
     // echo "Pengguana Telah Login";
     // $userdata = $_SESSION['userdata'];
@@ -46,6 +46,14 @@ if(isset($_SESSION['Auth']) && $user['ac_status']==1 && !$pagecount)
     showPage('wall');
 
 }
+elseif((isset($_SESSION['Auth']) && isset($_GET['mading']) && $user['ac_status']==1) || (isset($_SESSION['Auth']) && isset($_GET['mading']) && $user['ac_status']==4))
+{
+    $posts = getPostMading();
+    showPage('header',['page_title'=>'Social media - Mading']);
+    showPage('navbar');
+    showPage('mading');
+}
+
 elseif(isset($_SESSION['Auth']) && $user['ac_status']==0  && !$pagecount)
 {
     showPage('header',['page_title'=>'Social media - Verifikasi Email']);
@@ -56,13 +64,14 @@ elseif(isset($_SESSION['Auth']) && $user['ac_status']==2  && !$pagecount)
     showPage('header',['page_title'=>'Social media - Blokir']);
     showPage('blocked');
 }
-elseif(isset($_SESSION['Auth']) && isset($_GET['editprofile']) && $user['ac_status']==1)
+elseif((isset($_SESSION['Auth']) && isset($_GET['editprofile']) && $user['ac_status']==1) || (isset($_SESSION['Auth']) && isset($_GET['editprofile']) && $user['ac_status']==4))
 {
     showPage('header',['page_title'=>'Social media - Edit Profile']);
     showPage('navbar');
     showPage('edit_profile');
 }
-elseif(isset($_SESSION['Auth']) && isset($_GET['u']) && $user['ac_status']==1)
+
+elseif((isset($_SESSION['Auth']) && isset($_GET['u']) && $user['ac_status']==1) || (isset($_SESSION['Auth']) && isset($_GET['u']) && $user['ac_status']==4))
 {
     $profile = getUserByUsername($_GET['u']);
     // print_r($profile);
@@ -100,7 +109,7 @@ else if(isset($_GET['lupapassword']))
 }
 else
 {
-    if(isset($_SESSION['Auth']) && $user['ac_status']==1)
+    if((isset($_SESSION['Auth']) && $user['ac_status']==1) || (isset($_SESSION['Auth']) && $user['ac_status']==4))
     {
         showPage('header',['page_title'=>'Social media - Home']);
         showPage('navbar');
