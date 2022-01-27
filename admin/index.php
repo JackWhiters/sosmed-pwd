@@ -70,6 +70,26 @@ $admin = getAdmin($_SESSION['admin_auth']);
 
         <?php if(isset($_GET['edit_profile'])){
                 ?>
+                <body>
+                    <script>
+                        const body = document.querySelector('body');
+                            const button = document.querySelector('#darkbutton');
+                            function toggleDark() {
+                            if (body.classList.contains('light-mode')) {
+                                body.classList.remove('light-mode');
+                                localStorage.setItem("theme", "dark-mode");
+                            } else {
+                                body.classList.add('light-mode');
+                                localStorage.setItem("theme", "light-mode");
+                            }
+                            }
+
+                            if (localStorage.getItem("theme") === "light-mode") {
+                            body.classList.add('light-mode');
+                            }
+
+                            document.querySelector('#darkbutton').addEventListener('click', toggleDark);
+                    </script>
                 <main>
                     <h1>Edit Your Profile</h1>
                     <!-- /.card-header -->
@@ -84,19 +104,19 @@ $admin = getAdmin($_SESSION['admin_auth']);
                          <tr>
                              <td ><label for="exampleInputEmail1">Full Name</label></td>
                         <td ><div class="form-group">
-                            <input type="text" name="full_name" value="<?=$admin['full_name']?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Full Name" required>
+                            <input type="text" style="color:black" name="full_name" value="<?=$admin['full_name']?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Full Name" required>
                         </div></td>
                             </tr>
                             <tr>
                         <td><label for="exampleInputEmail1">Email address</label></td>
                         <td><div class="form-group">
-                            <input type="email" name="email"  value="<?=$admin['email']?>" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                            <input type="email" style="color:black" name="email"  value="<?=$admin['email']?>" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                         </div></td>
                         </tr>
                         <tr>
                         <td><label for="exampleInputPassword1">Password</label></td>
                         <td><div class="form-group">
-                            <input type="text" name="password" value="<?=$admin['password_text']?>" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="text" style="color:black" name="password" value="<?=$admin['password_text']?>" class="form-control" id="exampleInputPassword1" placeholder="Password">
                         </div></td>
                         </tr>
                         
@@ -109,7 +129,7 @@ $admin = getAdmin($_SESSION['admin_auth']);
                         <!-- /.card-body -->
                         </div>
                         </div>
-
+            
                        
                     </form>
                     </div>
@@ -117,6 +137,8 @@ $admin = getAdmin($_SESSION['admin_auth']);
         </div>
         </main>
         </div>
+        <script src="dist/js/pages/index.js"></script>
+        </body>
             <?php
               }
               else
