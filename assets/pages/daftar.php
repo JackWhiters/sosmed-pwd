@@ -10,7 +10,7 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/icons/bootstrap-icons.css" rel="stylesheet">
     <link href="main.css" rel="stylesheet">
-    <title>Login</title>
+    <title>Daftar</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="assets/images/nyosmed2.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -29,9 +29,9 @@
             <div class="main-content">
                 <div class="slide-container" style="background-image: url(assets/images/phone-frame9.png);">
                 <div class="slide-content" id="slide-content">
-                        <img src="assets/images/slide (1).jpg" alt="slide image" class="active">
-                        <img src="assets/images/slide (2).jpg" alt="slide image">
-                        <img src="assets/images/slide (3).jpg" alt="slide image">
+                        <img src="assets/images/1.jpeg" alt="slide image" class="active">
+                        <img src="assets/images/2.jpeg" alt="slide image">
+                        <img src="assets/images/3.jpeg" alt="slide image">
                         <img src="assets/images/slide (4).jpg" alt="slide image">
                         <img src="assets/images/slide (5).jpg" alt="slide image">   
                     </div>
@@ -137,7 +137,7 @@
                                         Password
                                     </span>
                                     <input type="password" name="password" class="form-control rounded-0" id="floatingPassword">
-                                    <button type="button">Show</button>
+                                    <button type="button">LIHAT</button>
                                 </div>
                             </div>
                             <?=showError('password')?>
@@ -152,8 +152,8 @@
                     </div>
                     <div class="box goto">
                         <p>
-                            Loe Deh Ad Account?
-                            <a href="?login">SKUY LOGIN!!</a>
+                            SUDAH PUNYA AKUN?
+                            <a href="?login">AYO LOGIN!!</a>
                         </p>
                     </div>
                     </div>
@@ -167,7 +167,7 @@
                 <a href="#" id="darkbutton">Darkmode</a>
             </div>
             <div class="copyright">
-                @JAMET
+                @Kelompok 21 - PWD
             </div>    
         </div>
     </div>

@@ -117,7 +117,7 @@
     <div class="footer">
             <div class="links">
                 
-                <a href="#" id="darkmode-toggle">Darkmode</a>
+                <a href="#" id="darkbutton">Darkmode</a>
             </div>
             <div class="copyright">
                 @JAMET

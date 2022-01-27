@@ -7,16 +7,16 @@
     --color-danger : #ff7782;
     --color-success : #41f1b6;
     --color-warning : #ffbb55;
-    --color-white : #fff;
+
     --color-info-dark : #728394;
     --color-info-light : #dcc1eb;
     --color-dark : #48484bad;
     --color-light: rgba(132, 139, 200, 0.18);
     --color-dark-variant : #677483;
     --color-primary-variant : #111e88;
-    --color-background : #fff;
-    --font-color : #050505ad;
-    --shadow : #48484bad;
+
+
+
 
     --card-border-radius : 2rem;
     --border-radius-1 : 0.4rem;
@@ -26,16 +26,55 @@
     --card-padding : 1.4rem;
     --padding-1 : 1.2rem;
 
-    --box-shadow : 0 1rem 1rem var(--shadow);
-}
 
-/* -----dark theme variable----- */
-.light-mode {
+
     --color-background : #181a1e;
     --color-white : #f1f7fa;
     --font-color : #f5f5fcad;
     --box-shadow : 0 1rem 1rem var(--shadow);
     --shadow : #a1a1a186;
+}
+
+/* -----dark theme variable----- */
+.light-mode {
+    --color-background : #fff;
+    --color-white : #fff;
+    --shadow : #48484bad;
+    --font-color : #050505ad;
+    --box-shadow : 0 1rem 1rem var(--shadow);
+
+    --color-primary : #7380ec;
+    --color-danger : #ff7782;
+    --color-success : #41f1b6;
+    --color-warning : #ffbb55;
+
+    --color-info-dark : #728394;
+    --color-info-light : #dcc1eb;
+    --color-dark : #48484bad;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant : #677483;
+    --color-primary-variant : #111e88;
+
+
+
+
+    --card-border-radius : 2rem;
+    --border-radius-1 : 0.4rem;
+    --border-radius-2 : 0.8rem;
+    --border-radius-3 : 1.2rem;
+
+    --card-padding : 1.4rem;
+    --padding-1 : 1.2rem;
+
+
+
+
+/* 
+    --color-background : #181a1e;
+    --color-white : #f1f7fa;
+    --font-color : #f5f5fcad;
+    --box-shadow : 0 1rem 1rem var(--shadow);
+    --shadow : #a1a1a186; */
 
 }
 

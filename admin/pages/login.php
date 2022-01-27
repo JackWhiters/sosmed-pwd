@@ -99,7 +99,7 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
                 <a href="#" id="darkbutton">Darkmode</a>
             </div>
             <div class="copyright">
-                @JAMET
+                @Kelompok 12 - PWD
             </div>
     </div>
 </div>

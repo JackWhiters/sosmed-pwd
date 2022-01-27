@@ -26,9 +26,9 @@
             <div class="main-content">
                 <div class="slide-container" style="background-image: url(assets/images/phone-frame9.png);">
                 <div class="slide-content" id="slide-content">
-                        <img src="assets/images/slide (1).jpg" alt="slide image" class="active">
-                        <img src="assets/images/slide (2).jpg" alt="slide image">
-                        <img src="assets/images/slide (3).jpg" alt="slide image">
+                        <img src="assets/images/1.jpeg" alt="slide image" class="active">
+                        <img src="assets/images/2.jpeg" alt="slide image">
+                        <img src="assets/images/3.jpeg" alt="slide image">
                         <img src="assets/images/slide (4).jpg" alt="slide image">
                         <img src="assets/images/slide (5).jpg" alt="slide image">
                     </div>
@@ -45,7 +45,7 @@
                         <div class="logo">
                             <!-- <img src="assets/images/logo-light1.png" alt="Instagram logo" class="logo-light">
                             <img src="assets/images/logo-dark1.png" alt="Instagram logo" class="logo-dark"> -->
-                            <svg viewBox="0 0 290 100">
+                            <svg viewBox="0 0 300 100">
             <text id="mytext" x="50%" y="50%" text-anchor="middle" fill="none">NyosMed</text>
             <use xlink:href="#mytext" class="copy copy1"></use>
             <use xlink:href="#mytext" class="copy copy2"></use>
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <div class="animate-input">
                                     <span>
-                                        Phone number, username or email
+                                        Username atau email
                                     </span>
                                     <input type="text" name="username_email" value="<?=showFormData('username_email') ?>" class="form-control rounded-0">
                                 </div>
@@ -75,14 +75,14 @@
                                         Password
                                     </span>
                                     <input type="password" name="password" class="form-control rounded-0" id="floatingPassword">
-                                    <button >Show</button>
+                                    <button type="button">Lihat</button>
                                 </div>
                             </div>
                             <?=showError('password')?>
                             <br/>
                             <div class="btn-group">
                                 <button class="btn-login" id="signin-btn" disabled>
-                                    Log In
+                                    Masuk
                                 </button>
                             </div>
                         </div>
@@ -92,13 +92,13 @@
                                 <div>OR</div>
                                 <div></div>
                             </div>
-                            <a href="?lupapassword" class="forgot-pw" style="text-decorations:none; color:inherit;">Lu Lupa Password? Klik Sini Ngabs</a>
+                            <a href="?lupapassword" class="forgot-pw" style="text-decorations:none; color:inherit;">Lupa Password? Klik Sini</a>
                         </div>
                     </div>
                     <div class="box goto">
                         <p>
-                            Loe Gx Punya Akun!?
-                            <a href="?daftar">DAFTAR NGABS!!</a>
+                            GAK PUNYA AKUN? 
+                            <a href="?daftar">DAFTAR KUY</a>
                         </p>
                     </div>
                     </div>
