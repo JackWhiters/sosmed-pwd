@@ -1,11 +1,11 @@
 :root {
     --body-bg: #151515;
-    --box-bg: #262626;
-    --box-border-color: #faeded;
+    --box-bg: transparent;
+    --box-border-color: #d2d2d2;
     --txt-color: #d2d2d2;
     --txt-second-color: #d2d2d2;
     --background:#262626;
-    --box-shadow: 0 5px 15px rgb(255, 251, 251);
+
     /* --body-bg: #fafafa;
     --box-bg: transparent;
     --box-border-color:#ffffff;
@@ -26,7 +26,7 @@
 
 .light-mode {
     --body-bg: #fafafa;
-    --box-bg: #eeeeee;
+    --box-bg: transparent;
     --box-border-color:#ffffff;
     --txt-color: #262626;
     --txt-second-color: #0e0d0d;
@@ -35,7 +35,6 @@
     --fb-color: #385185;
     --a-color: #ffffff;
     --background: #eeeeee;
-    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.685);
     /* --bg-color-section1: rgb(30, 30, 71);
     --bg-color-section2: rgb(74, 38, 82);
     --bg-color-section3: rgb(73, 92, 48);
@@ -57,8 +56,8 @@ body {
 }
 
 .container {
-    width: 550vh;
-    height: 135vh;
+    width: 500vh;
+    height: 120vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,6 +66,22 @@ body {
     position: relative;
     background: blur();
 }
+.container .navbar
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 25px;
+    margin-top: 1em;
+}
+
+.container .navbar .navitem
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .main-container {
     display: flex;
     flex-grow: 1;
@@ -115,7 +130,7 @@ body {
 
 .form-container {
     flex-grow: 1;
-    max-width: 500px;
+    max-width: 500vh;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
@@ -171,17 +186,17 @@ section .color:nth-child(4)
     border: 1px solid var(--box-border-color);
     background-color: var(--box-bg);
     border-radius: 20px;
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 .box .square
 {
     position: absolute;
     backdrop-filter: blur(5px);
-    box-shadow:  var(--box-shadow);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.1);
     border: 1px solid var(--box-border-color);
     border-right: 1px solid  var(--box-border-color);
     border-bottom: 1px solid var(--box-border-color);
-    background: var( --background);
+    background: var( --border-square);
     border-radius: 10px;
     animation: animate 10s linear infinite;
     animation-delay: calc(-1s * var(--i));
@@ -247,7 +262,7 @@ section .color:nth-child(4)
     text-align: center;
     height: 51px;
     width: 175px;
-    margin: -25px auto 12px;
+    margin: 22px auto 12px;
 }
 
 .form-content .logo img {
@@ -283,8 +298,8 @@ section .color:nth-child(4)
 }
 
 .animate-input {
-    height: 30px;
-    border-radius: 1px;
+    height: 36px;
+    border-radius: 3px;
     position: relative;
 }
 
@@ -293,7 +308,7 @@ section .color:nth-child(4)
     left: 8px;
     height: 100%;
     font-size: 12px;
-    line-height: 30px;
+    line-height: 36px;
     color: var(--txt-second-color);
     transform-origin: left;
     transition: transform 0.1s ease-in-out;

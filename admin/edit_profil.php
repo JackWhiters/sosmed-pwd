@@ -50,11 +50,11 @@ $admin = getAdmin($_SESSION['admin_auth']);
             </div>
 
             <div class="sidebar" >
-                <a href="?dashboard" class="active">
+                <a href="#" class="active">
                 <span class="material-icons-sharp">grid_view</span>
                 <h3>Dashboard</h3> 
                 </a>
-                <a href="?edit_profile" >
+                <a href="edit_profile.php" >
                 <span class="material-icons-sharp">account_circle</span>
                 <h3>Edit Profil</h3> 
                 </a>
@@ -66,63 +66,7 @@ $admin = getAdmin($_SESSION['admin_auth']);
         </aside>
         <!-- penutup sidebar -->
 
-        
-
-        <?php if(isset($_GET['edit_profile'])){
-                ?>
-                <main>
-                    <h1>Edit Your Profile</h1>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <?=showError('adminprofile')?>
-                    <div class="user-list">
-                    <form method="post" action="php/admin_actions.php?updateprofile">
-                        
-                        <input type="hidden" name="user_id" value="<?=$admin['id']?>" >
-                        <table class="table">   
-                        <tbody>
-                         <tr>
-                             <td ><label for="exampleInputEmail1">Full Name</label></td>
-                        <td ><div class="form-group">
-                            <input type="text" name="full_name" value="<?=$admin['full_name']?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Full Name" required>
-                        </div></td>
-                            </tr>
-                            <tr>
-                        <td><label for="exampleInputEmail1">Email address</label></td>
-                        <td><div class="form-group">
-                            <input type="email" name="email"  value="<?=$admin['email']?>" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-                        </div></td>
-                        </tr>
-                        <tr>
-                        <td><label for="exampleInputPassword1">Password</label></td>
-                        <td><div class="form-group">
-                            <input type="text" name="password" value="<?=$admin['password_text']?>" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div></td>
-                        </tr>
-                        
-                        </tbody>
-                        </table>
-                        <br>
-                        <br>   
-                        <button style="float:right" type="submit" class="button-29">Update Profile</button>
-                        </div>
-                        <!-- /.card-body -->
-                        </div>
-                        </div>
-
-                       
-                    </form>
-                    </div>
-                    </div>
-        </div>
-        </main>
-        </div>
-            <?php
-              }
-              else
-              {
-                  ?>
-                <main>
+        <main>
         <div class="right">
             <div class="top">
                 <button id="menu-btn">
@@ -137,7 +81,7 @@ $admin = getAdmin($_SESSION['admin_auth']);
                         <p>Hai,<b>Admin</b></p>
                     </div>
                 </div>
-            </div>
+            </div>    
         <h1>Dashboard</h1>
 
             <div class="insights">
@@ -212,6 +156,8 @@ foreach($userslist as $user){
                         <div>
                           <h5><?=$user['first_name'].' '.$user['last_name']?> - <span class="text-muted">@<?=$user['username']?></span></h5>
                           <h6 class="text-muted"><?=$user['email']?></h6>
+
+
                         </div>
 </div>
                     </td>
@@ -245,11 +191,7 @@ foreach($userslist as $user){
         </div>
 
     </div>
-    <?php
-                echo "Dashboard";
-              } ?>
 
-        
     <script src="dist/js/pages/index.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

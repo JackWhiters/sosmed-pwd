@@ -20,9 +20,6 @@
 <body>
 <!-- <div class="container"> -->
         <section>
-        <div class="color"></div>
-        <div class="color"></div>
-        <div class="color"></div>
  
            <div class="container">
                <div class="main-container">
@@ -36,20 +33,19 @@
                         <img src="assets/images/slide (5).jpg" alt="slide image">
                     </div>
                 </div>
+                <div class="main-container">
                 <form method="post" action="assets/php/actions.php?login">
                 <div class="form-container">
                 <img src="assets/images/rm3.png" width="350px" height="100px">
                 <div class="box">
            <div class="square" style="--i:0"></div>
            <div class="square" style="--i:1"></div>
-           <div class="square" style="--i:2"></div>
-           <div class="square" style="--i:3"></div>
-           <div class="square" style="--i:4"></div>    
-                <div class="form-content box">
+           <div class="square" style="--i:2"></div>   
+                <div class="form-content ">
                         <div class="logo">
                             <!-- <img src="assets/images/logo-light1.png" alt="Instagram logo" class="logo-light">
                             <img src="assets/images/logo-dark1.png" alt="Instagram logo" class="logo-dark"> -->
-                            <svg viewBox="0 0 300 100">
+                            <svg viewBox="0 0 290 100">
             <text id="mytext" x="50%" y="50%" text-anchor="middle" fill="none">NyosMed</text>
             <use xlink:href="#mytext" class="copy copy1"></use>
             <use xlink:href="#mytext" class="copy copy2"></use>
@@ -62,6 +58,7 @@
                         <div class="signin-form" id="signin-form">
 
                             <form action="login.php" method="post">
+                            <?=showError('checkuser')?>
                             <div class="form-group">
                                 <div class="animate-input">
                                     <span>
@@ -69,8 +66,8 @@
                                     </span>
                                     <input type="text" name="username_email" value="<?=showFormData('username_email') ?>" class="form-control rounded-0">
                                 </div>
-                                <?=showError('username_email')?>
                             </div>
+                            <?=showError('username_email')?>
                             <br/>
                             <div class="form-group">
                                 <div class="animate-input">
@@ -78,11 +75,10 @@
                                         Password
                                     </span>
                                     <input type="password" name="password" class="form-control rounded-0" id="floatingPassword">
-                                    <button type="button">Show</button>
+                                    <button >Show</button>
                                 </div>
-                                <?=showError('password')?>
-                                <?=showError('checkuser')?>
                             </div>
+                            <?=showError('password')?>
                             <br/>
                             <div class="btn-group">
                                 <button class="btn-login" id="signin-btn" disabled>
@@ -90,7 +86,7 @@
                                 </button>
                             </div>
                         </div>
-                        </form>
+
                             <div class="divine">
                                 <div></div>
                                 <div>OR</div>
@@ -105,8 +101,9 @@
                             <a href="?daftar">DAFTAR NGABS!!</a>
                         </p>
                     </div>
-</div>
+                    </div>
                     </form>         
+                </div>
                 </div>
     </div>
     <div class="footer">
@@ -115,7 +112,7 @@
                 <a href="#" id="darkbutton">Darkmode</a>
             </div>
             <div class="copyright">
-                @JAMET
+                @KELOMPOK 21 - PWD
             </div>
     </div>
 </div>

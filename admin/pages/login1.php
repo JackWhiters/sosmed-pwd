@@ -16,13 +16,16 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="../dist/css/app.css">
+  <link rel="stylesheet" href="../dist/css/ca.css">
   <link rel="stylesheet" href="../../assets/css/logo.css">
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body>
 <!-- <div class="container"> -->
         <section>
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="color"></div>
 
            <div class="container">
                <div class="main-container">
@@ -30,15 +33,17 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
                 
                 <form action="../php/admin_actions.php?login" method="post">
                 <div class="form-container">
-
-
+                </br>
+           </br>
+           </br>
+           </br>
                 <div class="box">
            <div class="square" style="--i:0"></div>
            <div class="square" style="--i:1"></div>
            <div class="square" style="--i:2"></div>
-
-             
-                <div class="form-content">
+           <div class="square" style="--i:3"></div>
+           <div class="square" style="--i:4"></div>    
+                <div class="form-content box">
                     
                 <center>
                 <svg viewBox="0 0 300 100">
@@ -49,7 +54,6 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
             <use xlink:href="#mytext" class="copy copy4"></use>
             <use xlink:href="#mytext" class="copy copy5"></use>
         </svg>
-        
                 <p class="login-box-msg">ini Khusus Admin NGABS</p></center>
                         <div class="signin-form" id="signin-form">
                         <?=showError('useraccess')?>
@@ -62,7 +66,7 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
                                     <input type="email" name="email" class="form-control" required>
                                 </div>
                             </div>
-
+                            <br/>
                             <div class="form-group">
                                 <div class="animate-input">
                                     <span class="fas fa-lock">
@@ -71,12 +75,14 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
                                     <input type="password" name="password" class="form-control" required>
                                 </div>
                             </div>
+                            <br/>
                            
           
-            <div class="form-group" style=" border:none">
+            <div class="icheck-primary">
               <input type="checkbox" id="remember">
-              <label class="form-check-label">
-                            Ingat Aku </label>
+              <label for="remember">
+                Ingat Aku
+              </label>
             </div>
           
                             <div class="btn-group">
@@ -89,9 +95,6 @@ if(isset($_SESSION['admin_auth'])) header('Location:../');
                                
                 </div>
     </div>
-    <br/>
-    <br/>
-    <br/>
     <div class="footer">
 
             <div class="links">
